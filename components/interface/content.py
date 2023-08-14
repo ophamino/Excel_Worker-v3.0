@@ -14,6 +14,7 @@ class Content(QWidget):
         super().__init__(parent)
         self.layout: QVBoxLayout = QVBoxLayout()
         self.initUI()
+        self.setFixedSize(850, 1200)
         
     def initUI(self) -> None:
         pass

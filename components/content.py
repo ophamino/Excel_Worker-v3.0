@@ -1,7 +1,7 @@
 from typing import Optional
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QApplication
-from components.interface.buttons import MonthButton
+from components.interface import ConsumersContent
 
 
 class Content(QWidget):
@@ -14,7 +14,7 @@ class Content(QWidget):
         layout = QVBoxLayout(self)
         self.setLayout(layout)
         button = QPushButton("Click me")
-        button_1 = MonthButton()
+        button_1 = ConsumersContent()
         layout.addWidget(button)
         layout.addWidget(button_1)
         layout.addStretch(1)

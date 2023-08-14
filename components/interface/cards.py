@@ -19,6 +19,7 @@ class Card(QWidget):
         self.title: str = None
         self.button: QWidget = None
         self.initUI()
+        self.setFixedSize(800, 150)
     
     def initUI(self):
         title = QLabel(self.title)
@@ -30,6 +31,8 @@ class Card(QWidget):
 class ConsemersIndividualSvodCard(Card):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+    
+    def initUI(self):
         self.button = ConsumersIndividualSvodButton()
         self.title = "Сводная ведомость бытовых потребителей"
 
