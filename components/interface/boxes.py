@@ -18,7 +18,7 @@ class Box(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.initUI()
-        
+        self.setFixedSize(1000, 1000)
     def initUI(self):
         pass
     

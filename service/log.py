@@ -56,7 +56,7 @@ class Log:
                     for index in range(len((new_values))):
                         if new_values[index] != old_values[index]:
                             coordinate = changes[key]["coordinate"][index]
-                            data.append([1, key, "", coordinate, old_values[index], new_values[index], "Изменено", datetime.now().date(), datetime.now().time()])
+                            data.append([1, key, "", coordinate, new_values[index], old_values[index], "Изменено", datetime.now().date(), datetime.now().time()])
                 static.pop(key)
             
         if static.keys():

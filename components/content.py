@@ -1,7 +1,7 @@
 from typing import Optional
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QApplication
-from components.interface import ConsumersContent
+from components.interface.cards import ConsemersTotalSvodCard
 
 
 class Content(QWidget):
@@ -13,16 +13,8 @@ class Content(QWidget):
         self.setStyleSheet("QWidget { background-color: #FFFFFF; }")
         layout = QVBoxLayout(self)
         self.setLayout(layout)
-        button = QPushButton("Click me")
-        button_1 = ConsumersContent()
-        layout.addWidget(button)
+        button_1 = ConsemersTotalSvodCard()
         layout.addWidget(button_1)
         layout.addStretch(1)
     
     
-app = QApplication([])
-
-content = Content()
-content.show()
-
-app.exec_()

@@ -19,7 +19,7 @@ class Card(QWidget):
         self.title: str = None
         self.button: QWidget = None
         self.initUI()
-        self.setFixedSize(800, 150)
+        self.setFixedSize(1400, 150)
     
     def initUI(self):
         title = QLabel(self.title)
@@ -40,6 +40,8 @@ class ConsemersIndividualSvodCard(Card):
 class ConsemersCommerceSvodCard(Card):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+        
+    def initUI(self):
         self.button = ConsumersCommerceSvodButton()
         self.title = "Сводна ведомсть коммерческих потребителеей"
 
@@ -47,13 +49,18 @@ class ConsemersCommerceSvodCard(Card):
 class ConsemersTotalSvodCard(Card):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+
+    def initUI(self):
         self.button = ConsumersTotalSvodButton()
         self.title = "Сводная ведомость потребителей"
+        return super().initUI()
 
 
 class ConsemersIndividualStatementCard(Card):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+        
+    def initUI(self):
         self.button = ConsumersIndividualStatementButton()
         self.title = "Расчетная ведомость бытовых потребителей"
 
@@ -61,6 +68,8 @@ class ConsemersIndividualStatementCard(Card):
 class ConsemersCommerceStatementCard(Card):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+    
+    def initUI(self):
         self.button = ConsumersCommerceStatementButton()
         self.title = "Расчетная ведомость коммерческих потребителей"
 
@@ -68,6 +77,7 @@ class ConsemersCommerceStatementCard(Card):
 class ConsumersLogCard(Card):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+    def initUI(self):
         self.button = ConsumersLogButton()
         self.title = "Журнал изменений"
 
