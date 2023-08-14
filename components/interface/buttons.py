@@ -10,7 +10,7 @@ class MonthButton(QWidget):
     
     def initUI(self) -> None:
         self.button = QPushButton("Сформировать", self)
-        self.setGeometry(100, 100, 200, 50)
+        self.setFixedSize(100, 50)
         self.button.clicked.connect(self.on_button_clicked)
         
     def on_button_clicked(self) -> None:
