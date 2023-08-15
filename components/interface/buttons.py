@@ -3,15 +3,11 @@ from abc import ABC, abstractmethod
 from PyQt5.QtWidgets import QWidget, QPushButton, QInputDialog
 
 
-class MonthButton(QWidget):
+class MonthButton(QPushButton):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.initUI()
-    
-    def initUI(self) -> None:
-        self.button = QPushButton("Сформировать", self)
+        super(MonthButton. self).__init__("Сформировать", parent)
         self.setFixedSize(100, 50)
-        self.button.clicked.connect(self.on_button_clicked)
+        self.clicked.connect(self.on_button_clicked)
         
     def on_button_clicked(self) -> None:
         months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']

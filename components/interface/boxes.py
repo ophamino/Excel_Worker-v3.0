@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from .cards import (
     ConsemersCommerceStatementCard,
     ConsemersCommerceSvodCard,
@@ -15,27 +15,27 @@ from .cards import (
 
 
 class Box(QWidget):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, title: str, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-        self.initUI()
-        self.setFixedSize(1000, 1000)
-    def initUI(self):
-        pass
+        self.title = title
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.title)
+        self.setLayout(self.layout)
+
     
 class ConsemersSvodBox(Box):
-    def initUI(self):
-        layout = QVBoxLayout()
-        layout.addWidget(ConsemersIndividualSvodCard())
-        layout.addWidget(ConsemersCommerceSvodCard())
-        layout.addWidget(ConsemersTotalSvodCard())
+    def __init__(self, parent: QWidget | None = None) -> None:
+        self.setFixedSize(1200, 100 * 3)
+        super().__init__(title="Сводная ведомость", parent=parent)
+        
         
 
 
 class ConsumersStatementBox(Box):
     def initUI(self):
         layoyt = QVBoxLayout()
-        layoyt.addWidget(ConsemersIndividualStatementCard())
-        layoyt.addWidget(ConsemersCommerceStatementCard())
+        layoyt.addWidget(ConsemersIndividualStatementCard(self))
+        layoyt.addWidget(ConsemersCommerceStatementCard(self))
 
 
 class ConsumersLogBox(Box):

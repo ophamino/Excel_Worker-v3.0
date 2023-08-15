@@ -1,17 +1,19 @@
 from .content import (
     ConsumersContent,
-    BicuContent,
     BalanceContent,
+    BicuContent,
+    HelpContent,
     HistoryContent,
-    SettingsContent,
-    HelpContent
+    ReportsContent,
+    SettingsContent
     )
 
 __all__ = [
     ConsumersContent,
-    BicuContent,
     BalanceContent,
-    HistoryContent,
-    SettingsContent,
+    BicuContent,
     HelpContent,
+    HistoryContent,
+    ReportsContent,
+    SettingsContent
 ]
