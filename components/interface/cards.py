@@ -21,7 +21,7 @@ class CardTitle(QLabel):
 
 class ConsemersIndividualSvodCard(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsemersIndividualSvodCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -32,7 +32,7 @@ class ConsemersIndividualSvodCard(QWidget):
         
 class ConsemersCommerceSvodCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsemersCommerceSvodCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -44,7 +44,7 @@ class ConsemersCommerceSvodCard(QWidget):
 
 class ConsemersTotalSvodCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsemersTotalSvodCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -56,7 +56,7 @@ class ConsemersTotalSvodCard(QWidget):
 
 class ConsemersIndividualStatementCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsemersIndividualStatementCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -68,7 +68,7 @@ class ConsemersIndividualStatementCard(QWidget):
 
 class ConsemersCommerceStatementCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsemersCommerceStatementCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -80,7 +80,7 @@ class ConsemersCommerceStatementCard(QWidget):
 
 class ConsumersLogCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsumersLogCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -92,7 +92,7 @@ class ConsumersLogCard(QWidget):
 
 class BicuSvodCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BicuSvodCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -104,7 +104,7 @@ class BicuSvodCard(QWidget):
 
 class BicuStatementCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BicuStatementCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -116,7 +116,7 @@ class BicuStatementCard(QWidget):
 
 class BicuLogCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BicuLogCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -128,7 +128,7 @@ class BicuLogCard(QWidget):
 
 class BalanceCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BalanceCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
@@ -140,7 +140,7 @@ class BalanceCard(QWidget):
 
 class BalanceAnalyticsCard(QWidget):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BalanceAnalyticsCard, self).__init__(parent)
         self.button = ConsumersIndividualSvodButton(self)
         self.label = CardTitle("Сводная ведомость бытовых потребитилей",self)
         

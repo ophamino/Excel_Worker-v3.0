@@ -21,79 +21,62 @@ class MonthButton(QPushButton):
 
 
 class ConsumersIndividualSvodButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
     
     def do_something_with_month(self, month) -> None:
         pass
 
 
 class ConsumersCommerceSvodButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-
+    
     def do_something_with_month(self, month) -> None:
         pass
 
 class ConsumersTotalSvodButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
     
     def do_something_with_month(self, month) -> None:
         pass
 
 
 class ConsumersCommerceStatementButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
     
     def do_something_with_month(self, month) -> None:
         pass
 
 class ConsumersIndividualStatementButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
 
     def do_something_with_month(self, month) -> None:
         pass
     
 
-class ConsumersLogButton(QWidget):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+class ConsumersLogButton(MonthButton):
+    def do_something_with_month(self, month) -> None:
+        pass
 
 
 class BicuStatementButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
 
     def do_something_with_month(self, month) -> None:
         pass
 
 
 class BicuSvodButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
     
     def do_something_with_month(self, month) -> None:
         pass
 
 
-class BicuLogButton(QWidget):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+class BicuLogButton(MonthButton):
+    
+    def do_something_with_month(self, month) -> None:
+        pass
 
 
 class BalanceButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
 
     def do_something_with_month(self, month) -> None:
         pass
 
 class BalanceAnalyticsButton(MonthButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
 
     def do_something_with_month(self, month: str) -> None:
         pass

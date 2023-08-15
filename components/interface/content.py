@@ -20,9 +20,6 @@ class ConsumersContent(Content):
         self.title.setFixedHeight(100)
         self.layout = QVBoxLayout(self)
         self.layout.addWidget(self.title)
-        self.layout.addWidget(ConsemersSvodBox())
-        self.layout.addWidget(ConsumersStatementBox())
-        self.layout.addWidget(ConsumersLogBox())
         self.layout.addStretch(1)
         self.setLayout(self.layout)
 

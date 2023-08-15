@@ -3,26 +3,21 @@ import typing
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 
-from components.interface.cards import BicuStatementCard, BicuSvodCard
+from components.interface.cards import BicuLogCard
 
 
-class BicuStatementBox(QWidget):
+class BicuLogBox(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         
-        title = QLabel("Сводная ведомость", self)
-        
         layout = QVBoxLayout(self)
-        
-        layout.addWidget(title)
-        layout.addWidget(BicuStatementCard())
+        layout.addWidget(BicuLogCard(self))
         
         self.setLayout(layout)
 
 
-
 if __name__ == "__main__": 
     app = QApplication(sys.argv)
-    mainWindow = BicuStatementBox()
+    mainWindow = BicuLogBox()
     mainWindow.show() 
     sys.exit(app.exec_())

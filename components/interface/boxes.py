@@ -54,20 +54,21 @@ class ConsumersStatementBox(QWidget):
         self.setLayout(layout)
 
 
-class ConsumersLogBox(Box):
+class ConsumersLogBox(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(title="Журнал изменений", parent=parent)
-        self.setFixedHeight(100 * 1)
+        super().__init__(parent)
+        
+        layout = QVBoxLayout(self)
+        layout.addWidget(ConsumersLogCard(self))
+        
+        self.setLayout(layout)
 
 
 class BicuSvodBox(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         
-        title = QLabel("Сводная ведомость", self)
-        
         layout = QVBoxLayout(self)
-        layout.addWidget(title)
         layout.addWidget(BicuSvodCard())
         
         self.setLayout(layout)
@@ -77,24 +78,28 @@ class BicuStatementBox(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         
-        title = QLabel("Расчетные ведомости", self)
-        
         layout = QVBoxLayout(self)
-        
-        layout.addWidget(title)
         layout.addWidget(BicuStatementCard())
         
         self.setLayout(layout)
 
 
-class BicuLogBox(Box):
-    def initUI(self):
-        layout = QVBoxLayout()
-        layout.addWidget(BicuLogCard)
+class BicuLogBox(QWidget):
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        
+        layout = QVBoxLayout(self)
+        layout.addWidget(BicuLogCard(self))
+        
+        self.setLayout(layout)
 
 
 class BalanceBox(Box):
-    def initUI(self):
-        layout = QVBoxLayout()
-        layout.addWidget(BalanceCard())
-        layout.addWidget(BalanceAnalyticsCard())
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        
+        layout = QVBoxLayout(self)
+        layout.addWidget(BalanceCard(self))
+        layout.addWidget(BalanceAnalyticsCard(self))
+        
+        self.setLayout(layout)
