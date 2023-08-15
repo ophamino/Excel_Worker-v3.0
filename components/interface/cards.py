@@ -13,127 +13,138 @@ from .buttons import (
     BicuLogButton
     )
 
-class Card(QWidget):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.title: str = None
-        self.button: QWidget = None
-        # self.setStyleSheet("QWidget {border: 2px solid #000; border-radius: 10px;}")
-        self.initUI()
-        self.setFixedSize(1400, 120)
-    
-    def initUI(self):
-        title = QLabel(self.title)
-        title.setStyleSheet("QLabel {font-size: 20px; padding: 0 30px;}")
-        layot = QHBoxLayout()
-        layot.addWidget(title)
-        layot.addWidget(self.button)
-        self.setLayout(layot)
 
-class ConsemersIndividualSvodCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-    
-    def initUI(self):
-        self.button = ConsumersIndividualSvodButton()
-        self.title = "Сводная ведомость бытовых потребителей"
-        return super().initUI()
+class CardTitle(QLabel):
+    def __init__(self, text: str, parent: QWidget | None = None) -> None:
+        super().__init__(text, parent)
 
 
-class ConsemersCommerceSvodCard(Card):
+class ConsemersIndividualSvodCard(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
-    def initUI(self):
-        self.button = ConsumersCommerceSvodButton()
-        self.title = "Сводна ведомсть коммерческих потребителеей"
-        return super().initUI()
-
-
-class ConsemersTotalSvodCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-
-    def initUI(self):
-        self.button = ConsumersTotalSvodButton()
-        self.title = "Сводная ведомость потребителей"
-        return super().initUI()
-
-
-class ConsemersIndividualStatementCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
         
-    def initUI(self):
-        self.button = ConsumersIndividualStatementButton()
-        self.title = "Расчетная ведомость бытовых потребителей"
-        return super().initUI()
-
-
-class ConsemersCommerceStatementCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersCommerceSvodCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-    
-    def initUI(self):
-        self.button = ConsumersCommerceStatementButton()
-        self.title = "Расчетная ведомость коммерческих потребителей"
-        return super().initUI()
-
-
-class ConsumersLogCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         
-    def initUI(self):
-        self.button = ConsumersLogButton()
-        self.title = "Журнал изменений"
-        return super().initUI()
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
 
-class BicuSvodCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersTotalSvodCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-        self.button = BicuSvodButton()
-        self.title = "Сводная ведомость БИКУ"
-        return super().initUI()
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
 
-class BicuStatementCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersIndividualStatementCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-            
-    def initUI(self):
-        self.button = BicuStatementButton()
-        self.title = "Расчетная ведомость БИКУ"
-        return super().initUI()
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
 
-class BicuLogCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersCommerceStatementCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-            
-    def initUI(self):
-        self.button = BicuLogButton()
-        self.title = "Журнал изменений"
-        return super().initUI()
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
 
-class BalanceCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class ConsumersLogCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-            
-    def initUI(self):
-        self.button = BalanceButton()
-        self.title = "Сводный баланс"
-        return super().initUI()
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
 
-class BalanceAnalyticsCard(Card):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class BicuSvodCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-            
-    def initUI(self):
-        self.button = BalanceAnalyticsButton()
-        self.title = "Аналитика сводного баланса"
-        return super().initUI()
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
+
+class BicuStatementCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
+
+
+class BicuLogCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
+
+
+class BalanceCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей", self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
+
+
+class BalanceAnalyticsCard(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.button = ConsumersIndividualSvodButton(self)
+        self.label = CardTitle("Сводная ведомость бытовых потребитилей",self)
+        
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+        self.setLayout(layout)

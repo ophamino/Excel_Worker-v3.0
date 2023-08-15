@@ -15,45 +15,76 @@ from .cards import (
 
 
 class Box(QWidget):
+    
     def __init__(self, title: str, parent: QWidget | None = None) -> None:
         super().__init__(parent)
-        self.title = title
+        self.title = QLabel(title)
+        self.title.setStyleSheet("QLabel {font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 5px;}")
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.title)
         self.setLayout(self.layout)
 
     
-class ConsemersSvodBox(Box):
+class ComsumersSvodBox(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
-        self.setFixedSize(1200, 100 * 3)
-        super().__init__(title="Сводная ведомость", parent=parent)
+        super().__init__(parent)
         
+        title = QLabel("Сводная ведомость", self)
         
+        layout = QVBoxLayout(self)
+        layout.addWidget(title)
+        layout.addWidget(ConsemersIndividualSvodCard(self))
+        layout.addWidget(ConsemersCommerceSvodCard(self))
+        layout.addWidget(ConsemersTotalSvodCard(self))
+        
+        self.setLayout(layout)
 
 
-class ConsumersStatementBox(Box):
-    def initUI(self):
-        layoyt = QVBoxLayout()
-        layoyt.addWidget(ConsemersIndividualStatementCard(self))
-        layoyt.addWidget(ConsemersCommerceStatementCard(self))
+class ConsumersStatementBox(QWidget):
+     def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        
+        title = QLabel("Расчетные ведомости", self)
+        
+        layout = QVBoxLayout(self)
+        layout.addWidget(title)
+        layout.addWidget(ConsemersIndividualStatementCard(self))
+        layout.addWidget(ConsemersCommerceStatementCard(self))
+        
+        self.setLayout(layout)
 
 
 class ConsumersLogBox(Box):
-    def initUI(self):
-        layout = QVBoxLayout()
-        layout.addWidget(ConsumersLogCard())
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(title="Журнал изменений", parent=parent)
+        self.setFixedHeight(100 * 1)
 
 
-class BicuSvodBox(Box):
-    def initUI(self):
-        layout = QVBoxLayout()
+class BicuSvodBox(QWidget):
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        
+        title = QLabel("Сводная ведомость", self)
+        
+        layout = QVBoxLayout(self)
+        layout.addWidget(title)
         layout.addWidget(BicuSvodCard())
+        
+        self.setLayout(layout)
 
 
-class BicuStatementBox(Box):
-    def initUI(self):
-        layout = QVBoxLayout()
+class BicuStatementBox(QWidget):
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        
+        title = QLabel("Расчетные ведомости", self)
+        
+        layout = QVBoxLayout(self)
+        
+        layout.addWidget(title)
         layout.addWidget(BicuStatementCard())
+        
+        self.setLayout(layout)
 
 
 class BicuLogBox(Box):
