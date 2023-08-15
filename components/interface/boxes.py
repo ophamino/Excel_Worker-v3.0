@@ -1,35 +1,35 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from .cards import (
-    ConsemersCommerceStatementCard,
-    ConsemersCommerceSvodCard,
-    ConsemersIndividualStatementCard,
     ConsemersIndividualSvodCard,
+    ConsemersCommerceSvodCard,
     ConsemersTotalSvodCard,
+    ConsemersIndividualStatementCard,
+    ConsemersCommerceStatementCard,
     ConsumersLogCard,
-    BicuLogCard, 
-    BicuStatementCard,
     BicuSvodCard,
+    BicuStatementCard,
+    BicuLogCard, 
     BalanceCard,
     BalanceAnalyticsCard,
     )
 
 
-class Box(QWidget):
+class ContentBox(QWidget):
     
-    def __init__(self, title: str, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.title = QLabel(title)
-        self.title.setStyleSheet("QLabel {font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 5px;}")
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.title)
-        self.setLayout(self.layout)
-
-    
-class ComsumersSvodBox(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ContentBox, self).__init__(parent)
+      
+ 
+class BoxTitle(QLabel):
+    def __init__(self, text: str, parent: QWidget | None = None) -> None:
+        super().__init__(text, parent)
+
+
+class ComsumersSvodBox(ContentBox):
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super(ComsumersSvodBox, self).__init__(parent)
         
-        title = QLabel("Сводная ведомость", self)
+        title = BoxTitle("Сводная ведомость", self)
         
         layout = QVBoxLayout(self)
         layout.addWidget(title)
@@ -40,11 +40,11 @@ class ComsumersSvodBox(QWidget):
         self.setLayout(layout)
 
 
-class ConsumersStatementBox(QWidget):
+class ConsumersStatementBox(ContentBox):
      def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsumersStatementBox, self).__init__(parent)
         
-        title = QLabel("Расчетные ведомости", self)
+        title = BoxTitle("Расчетные ведомости", self)
         
         layout = QVBoxLayout(self)
         layout.addWidget(title)
@@ -54,9 +54,9 @@ class ConsumersStatementBox(QWidget):
         self.setLayout(layout)
 
 
-class ConsumersLogBox(QWidget):
+class ConsumersLogBox(ContentBox):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(ConsumersLogBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
         layout.addWidget(ConsumersLogCard(self))
@@ -64,9 +64,9 @@ class ConsumersLogBox(QWidget):
         self.setLayout(layout)
 
 
-class BicuSvodBox(QWidget):
+class BicuSvodBox(ContentBox):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BicuSvodBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
         layout.addWidget(BicuSvodCard())
@@ -74,9 +74,9 @@ class BicuSvodBox(QWidget):
         self.setLayout(layout)
 
 
-class BicuStatementBox(QWidget):
+class BicuStatementBox(ContentBox):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BicuStatementBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
         layout.addWidget(BicuStatementCard())
@@ -84,9 +84,9 @@ class BicuStatementBox(QWidget):
         self.setLayout(layout)
 
 
-class BicuLogBox(QWidget):
+class BicuLogBox(ContentBox):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BicuLogBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
         layout.addWidget(BicuLogCard(self))
@@ -94,9 +94,9 @@ class BicuLogBox(QWidget):
         self.setLayout(layout)
 
 
-class BalanceBox(Box):
+class BalanceBox(ContentBox):
     def __init__(self, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
+        super(BalanceBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
         layout.addWidget(BalanceCard(self))

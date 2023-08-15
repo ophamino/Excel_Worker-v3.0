@@ -1,5 +1,3 @@
-from abc import ABC, abstractmethod
-
 from PyQt5.QtWidgets import QWidget, QPushButton, QInputDialog
 
 
