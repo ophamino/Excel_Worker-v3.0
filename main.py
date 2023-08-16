@@ -4,7 +4,7 @@ from typing import Optional
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QLabel, QVBoxLayout, QTabWidget
 from PyQt5.QtGui import QPixmap
  
-from components.sidebar import SideaBarButton
+from components.interface.buttons import SideaBarButton
 from components.interface import ConsumersContent, BicuContent, BalanceContent, ReportsContent, HelpContent, HistoryContent, SettingsContent
  
  

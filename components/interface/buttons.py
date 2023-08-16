@@ -1,8 +1,21 @@
+from typing import Optional
+
 from PyQt5.QtWidgets import QWidget, QPushButton, QInputDialog
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
+
+
+class SideaBarButton(QPushButton):
+    def __init__(self, name: str, icon: str, parent: Optional[QWidget] = None) -> None:
+        super(SideaBarButton, self).__init__(name, parent)
+        self.setIcon(QIcon(icon))
+        self.setFixedHeight(70)
+        self.setFixedWidth(340)
+        self.setIconSize(QSize(32, 32))
 
 
 class MonthButton(QPushButton):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(MonthButton, self).__init__("Сформировать", parent)
         self.setFixedSize(100, 50)
         self.clicked.connect(self.on_button_clicked)
@@ -12,7 +25,7 @@ class MonthButton(QPushButton):
         month, ok = QInputDialog.getItem(self, "Выбор месяца", "Выберите месяц", months)
         
         if ok:
-            self.do_something_with_month(self, month)
+            self.do_something_with_month(month)
     
     def do_something_with_month(self, month) -> None:
         pass

@@ -1,4 +1,7 @@
+from typing import Optional
+
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+
 from .cards import (
     ConsemersIndividualSvodCard,
     ConsemersCommerceSvodCard,
@@ -16,17 +19,18 @@ from .cards import (
 
 class ContentBox(QWidget):
     
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self,parent: Optional[QWidget] = None) -> None:
         super(ContentBox, self).__init__(parent)
       
  
 class BoxTitle(QLabel):
-    def __init__(self, text: str, parent: QWidget | None = None) -> None:
+    def __init__(self, text: str, parent: Optional[QWidget] = None) -> None:
         super().__init__(text, parent)
+        self.setStyleSheet("QLabel {font-size: 25px; padding: 10px 30px; border-bottom: 1px solid #000; font-family: 'Montserrat';}")
 
 
 class ComsumersSvodBox(ContentBox):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ComsumersSvodBox, self).__init__(parent)
         
         title = BoxTitle("Сводная ведомость", self)
@@ -41,7 +45,7 @@ class ComsumersSvodBox(ContentBox):
 
 
 class ConsumersStatementBox(ContentBox):
-     def __init__(self, parent: QWidget | None = None) -> None:
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsumersStatementBox, self).__init__(parent)
         
         title = BoxTitle("Расчетные ведомости", self)
@@ -55,7 +59,7 @@ class ConsumersStatementBox(ContentBox):
 
 
 class ConsumersLogBox(ContentBox):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsumersLogBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
@@ -65,7 +69,7 @@ class ConsumersLogBox(ContentBox):
 
 
 class BicuSvodBox(ContentBox):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BicuSvodBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
@@ -75,7 +79,7 @@ class BicuSvodBox(ContentBox):
 
 
 class BicuStatementBox(ContentBox):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BicuStatementBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
@@ -85,7 +89,7 @@ class BicuStatementBox(ContentBox):
 
 
 class BicuLogBox(ContentBox):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BicuLogBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)
@@ -95,7 +99,7 @@ class BicuLogBox(ContentBox):
 
 
 class BalanceBox(ContentBox):
-    def __init__(self, parent: QWidget | None = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BalanceBox, self).__init__(parent)
         
         layout = QVBoxLayout(self)

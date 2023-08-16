@@ -1,4 +1,7 @@
+from typing import Optional
+
 from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout
+
 from .buttons import (
     ConsumersIndividualSvodButton,
     ConsumersCommerceSvodButton,
@@ -15,13 +18,22 @@ from .buttons import (
 
 
 class CardTitle(QLabel):
-    def __init__(self, text: str, parent: QWidget | None = None) -> None:
+    def __init__(self, text: str, parent: Optional[QWidget] = None) -> None:
         super().__init__(text, parent)
+        self.setStyleSheet("QLabel {font-size: 20px; padding: 10px 30px; border-bottom: 1px solid #000; font-family: 'Montserrat';}")
 
 
-class ConsemersIndividualSvodCard(QWidget):
-    def __init__(self, parent: QWidget | None = None) -> None:
+class ContentCard(QWidget):
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
+        super(ContentCard, self).__init__(parent)
+        self.setStyleSheet("QWidget { }")
+        self.setFixedHeight(100)
+
+
+class ConsemersIndividualSvodCard(ContentCard):
+    def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsemersIndividualSvodCard, self).__init__(parent)
+        
         
         label = CardTitle("Сводная ведомость бытовых потребитилей", self)
         button = ConsumersIndividualSvodButton(self)
@@ -32,8 +44,8 @@ class ConsemersIndividualSvodCard(QWidget):
         
         self.setLayout(layout)
         
-class ConsemersCommerceSvodCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersCommerceSvodCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsemersCommerceSvodCard, self).__init__(parent)
         
         label = CardTitle("Сводная ведомость коммерческих потребитилей", self)
@@ -46,8 +58,8 @@ class ConsemersCommerceSvodCard(QWidget):
         self.setLayout(layout)
 
 
-class ConsemersTotalSvodCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersTotalSvodCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsemersTotalSvodCard, self).__init__(parent)
         
         label = CardTitle("Сводная ведомость потребитилей", self)
@@ -60,8 +72,8 @@ class ConsemersTotalSvodCard(QWidget):
         self.setLayout(layout)
 
 
-class ConsemersIndividualStatementCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersIndividualStatementCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsemersIndividualStatementCard, self).__init__(parent)
         
         label = CardTitle("Расчетная ведомость бытовых потребитилей", self)
@@ -74,8 +86,8 @@ class ConsemersIndividualStatementCard(QWidget):
         self.setLayout(layout)
 
 
-class ConsemersCommerceStatementCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class ConsemersCommerceStatementCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsemersCommerceStatementCard, self).__init__(parent)
         
         label = CardTitle("Расчетная ведомость коммерческих потребитилей", self)
@@ -88,8 +100,8 @@ class ConsemersCommerceStatementCard(QWidget):
         self.setLayout(layout)
 
 
-class ConsumersLogCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class ConsumersLogCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(ConsumersLogCard, self).__init__(parent)
         
         label = CardTitle("Журнал изменений", self)
@@ -102,8 +114,8 @@ class ConsumersLogCard(QWidget):
         self.setLayout(layout)
 
 
-class BicuSvodCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class BicuSvodCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BicuSvodCard, self).__init__(parent)
         
         label = CardTitle("Сводная ведомость БИКУ", self)
@@ -116,8 +128,8 @@ class BicuSvodCard(QWidget):
         self.setLayout(layout)
 
 
-class BicuStatementCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class BicuStatementCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BicuStatementCard, self).__init__(parent)
         
         label = CardTitle("Расчетная ведомость БИКУ", self)
@@ -130,8 +142,8 @@ class BicuStatementCard(QWidget):
         self.setLayout(layout)
 
 
-class BicuLogCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class BicuLogCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BicuLogCard, self).__init__(parent)
         
         label = CardTitle("Журнал изменений", self)
@@ -144,8 +156,8 @@ class BicuLogCard(QWidget):
         self.setLayout(layout)
 
 
-class BalanceCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class BalanceCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BalanceCard, self).__init__(parent)
         
         label = CardTitle("Сводный баланс", self)
@@ -158,8 +170,8 @@ class BalanceCard(QWidget):
         self.setLayout(layout)
 
 
-class BalanceAnalyticsCard(QWidget):
-     def __init__(self, parent: QWidget | None = None) -> None:
+class BalanceAnalyticsCard(ContentCard):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(BalanceAnalyticsCard, self).__init__(parent)
         
         label = CardTitle("Аналитика сводного баланса",self)
