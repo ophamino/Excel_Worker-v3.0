@@ -2,7 +2,7 @@ import os
 from typing import Dict, Optional, List
 from abc import ABC, abstractmethod
 
-from src.utils.excel import open_excel
+from openpyxl import load_workbook
 
 
 class AbstractRepository(ABC):
@@ -32,7 +32,7 @@ class ExcelRepository(AbstractRepository):
             Dict[str, Dict[str, Any]]: Итоговые данные
         """
         data = dict()
-        file = open_excel(path)
+        file = load_workbook(path)
         sheet = file.worksheets[0]
         for row in range(self.skip_rows, sheet.max_row + 1):
             data[sheet.cell(row, self.id_col).value] = {

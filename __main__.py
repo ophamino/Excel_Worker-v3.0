@@ -1,6 +1,6 @@
 import sys
 import logging 
-from typing import Optional 
+from typing import Optional
  
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QLabel, QVBoxLayout, QTabWidget
 from PyQt5.QtGui import QPixmap
@@ -110,6 +110,7 @@ class Application(QMainWindow):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, filename=resource_path("src\log.log"), filemode="a", encoding="utf-8", format="[%(levelname)s] %(asctime)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+
     app = QApplication(sys.argv)
     mainWindow = Application()
     mainWindow.show() 

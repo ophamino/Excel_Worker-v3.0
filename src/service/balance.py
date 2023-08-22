@@ -4,7 +4,7 @@ from datetime import datetime
 from openpyxl import load_workbook
 
 from src.utils.base import get_main_dir
-from src.utils.excel import open_excel, open_sheet
+from src.utils.excel import open_sheet
 from src.utils.base import resource_path
 
 
@@ -17,7 +17,7 @@ class Balance:
     def serialize_network(self) -> dict[str, dict[str, str]]:
         data = {}
         
-        path = resource_path(f"{self.directory}\Реестровая база данных\Структура электросети\Свод ОЭСХ.xlsx")
+        path = resource_path(f"{self.directory}\\Реестровая база данных\\Структура электросети\\Свод ОЭСХ.xlsx")
         file = load_workbook(path, data_only=True)
         sheet = file.worksheets[0]
         for row in range(2, sheet.max_row + 1):
@@ -38,7 +38,7 @@ class Balance:
     def serialize_bicu(self, month: str | int) -> dict[str, dict[str, str]]:
         data = {}
         year = datetime.now().year
-        files_path = resource_path(f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс {year}\Сводная ведомость БИКУ\РВ БИКУ {month}")
+        files_path = resource_path(f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость БИКУ\РВ БИКУ {month}")
         for file in os.listdir(files_path):
             path = resource_path(f"{files_path}\{file}")
             book = load_workbook(path, data_only=True)
@@ -54,7 +54,7 @@ class Balance:
     def serialize_consumers(self, month: str | int, status: str) -> dict[str, dict[str, str]]:
         data = {}
         year = datetime.now().year
-        files_path = resource_path(f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс {year}\Сводная ведомость потребителей\РВ Потребителей {month}\РВ {status} потребителей")
+        files_path = resource_path(f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость потребителей\\РВ Потребителей {month}\\РВ {status} потребителей")
         for file in os.listdir(files_path):
             path = f"{files_path}\{file}"
             book = load_workbook(path, data_only=True)
@@ -99,8 +99,8 @@ class Balance:
         
     def create_balance(self, month: str | int) -> None:
         data = self.serialize_balance(month)
-        path = resource_path(f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс {datetime.now().year}\Сводный баланс 2023.xlsx")
-        file = open_excel(path)
+        path = resource_path(f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс {datetime.now().year}\\Сводный баланс 2023.xlsx")
+        file = load_workbook(path)
         sheet = open_sheet(file, month=month)
         
         sheet.append(["№", "Идентификатор", "Наименование", "Вход", "Выход", "Сальдо переток", "Полезный отпуск", "Потери", "Процент потерь"])

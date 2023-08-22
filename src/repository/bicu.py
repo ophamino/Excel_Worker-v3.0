@@ -1,11 +1,13 @@
 from typing import Dict, Any
 
 from .base import ExcelRepository
-from src.utils.excel import open_excel
+from openpyxl import load_workbook
 from src.utils.base import get_main_dir
+from src.utils.const import MONTH_LIST
 
 
 class BicuReposiitory(ExcelRepository):
+    """Класс для храненения данных БИКУ"""
     
     directory = get_main_dir()
     skip_rows = 8
@@ -25,7 +27,7 @@ class BicuReposiitory(ExcelRepository):
         Returns:
             Dict[str, Dict[str, Any]]: Все данные с рачетных ведомостей
         """
-        path = (f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость БИКУ\РВ БИКУ {month}")
+        path = (f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость БИКУ\\РВ БИКУ {month}")
         data = self.serialize_all_data(path)
         return data
     
@@ -36,8 +38,8 @@ class BicuReposiitory(ExcelRepository):
         Returns:
             Dict[str, Dict[str, Any]]: Необходимые данные
         """
-        path = f"{self.directory}\Реестровая база данных\Реестр БИКУ\Реестр БИКУ.xlsx"
-        file = open_excel(path)
+        path = f"{self.directory}\\Реестровая база данных\\Реестр БИКУ\\Реестр БИКУ.xlsx"
+        file = load_workbook(path)
         sheet = file.worksheets[0]
         data = {}
         
@@ -64,8 +66,8 @@ class BicuReposiitory(ExcelRepository):
         Returns:
             Dict[str, Dict[str, Any]]: Необходимые данные
         """
-        path = f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость БИКУ\Сводная ведомость БИКУ.xlsx"
-        file = open_excel(path)
+        path = f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость БИКУ\\Сводная ведомость БИКУ.xlsx"
+        file = load_workbook(path)
         sheet = file[month]
         data = {}
         
@@ -86,6 +88,7 @@ class BicuReposiitory(ExcelRepository):
         Returns:
             Dict[str, Dict[str, Any]]: Общие необходимые данные
         """
+        month = MONTH_LIST[MONTH_LIST.index(month) - 1]
         registry = self.serialize_register()
         svod = self.serialize_svod(month)
         data = {}

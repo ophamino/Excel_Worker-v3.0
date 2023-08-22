@@ -10,9 +10,9 @@ from src.utils.base import resource_path
 
 class Log:
     
-    change_path = f"{MAIN_DIR}\Реестровая база данных\Реестр потребителей\Реестр потребителей.xlsx"
-    static_path = resource_path("src\template\Реестр потребителей для сравнения.xlsx")
-    upload_to = f"{MAIN_DIR}\Реестровая база данных\Реестр потребителей\Журнал изменений.xlsx"
+    change_path = f"{MAIN_DIR}\\Реестровая база данных\\Реестр потребителей\\Реестр потребителей.xlsx"
+    static_path = resource_path(".\\src\\template\\consumers.xlsx")
+    upload_to = f"{MAIN_DIR}\\Реестровая база данных\Реестр потребителей\Журнал изменений.xlsx"
     col_id = 4
     
     def serialaze_changes(self)-> dict[str, list[Cell]]:
@@ -74,7 +74,7 @@ class Log:
         data = self.collect_changes()
         path = path = self.upload_to
         if not os.path.exists(path):
-            file = load_workbook(resource_path('src\template\Журнал изменений.xlsx'))
+            file = load_workbook(resource_path('.\\src\\template\\log.xlsx'))
             file.save(path)
         file = load_workbook(path)
         sheet = file[str(datetime.now().year)]
@@ -93,7 +93,7 @@ class Log:
 
 
 class BicuLog(Log):
-    changs_path = f"{MAIN_DIR}\Реестровая база данных\Реестр БИКУ\Реестр БИКУ.xlsx"
+    changs_path = f"{MAIN_DIR}\\Реестровая база данных\\Реестр БИКУ\\Реестр БИКУ.xlsx"
     col_id = 3
-    static_path = resource_path("src\template\Реестр БИКУ для сравнения.xlsx")
-    upload_to = f"{MAIN_DIR}\Реестровая база данных\Реестр БИКУ\Журнал изменений.xlsx"
+    static_path = resource_path(".\\src\\template\\bicu.xlsx")
+    upload_to = f"{MAIN_DIR}\\Реестровая база данных\\Реестр БИКУ\\Журнал изменений.xlsx"

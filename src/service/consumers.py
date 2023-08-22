@@ -2,11 +2,10 @@ import os
 import logging
 from datetime import datetime
 
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.worksheet.worksheet import Worksheet
 
 from src.utils.const import MONTH_LIST, DEPARTAMENT
-from src.utils.excel import open_excel
 from src.utils.base import clean_directory, resource_path
 from src.service.base import BaseService
 from src.repository.consumers import ComsumerRepository
@@ -47,10 +46,10 @@ class ConsumersService(BaseService):
             Workbook: Загруженная книга
         """
         if not os.path.exists(path):
-            book = open_excel("template\Сводная ведомость потребителей.xlsx")
+            book = load_workbook("src\\template\\svod_consumers.xlsx")
             book.save(path)
 
-        return open_excel(path)
+        return load_workbook(path)
     
     def collect_commerce_svod(self, month: int) -> None:
         """
@@ -59,43 +58,41 @@ class ConsumersService(BaseService):
         Args:
             month (int): Номер месяца, за который нужно сформировать сводную ведомость
         """
-        path = f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость потребителей"
-        month = MONTH_LIST[month - 1]
-
-        data = self.repository.serialize_all_data(f"{path}\РВ Потребителей {month}\РВ Коммерческих потребителей")
-        book = self.get_svod_if_exists(f"{path}\Сводная ведомость Коммерческих потребителей.xlsx")
+        path = f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей"
+        data = self.repository.serialize_all_data(f"{path}\\РВ Потребителей {month}\\РВ Коммерческих потребителей")
+        book = self.get_svod_if_exists(f"{path}\\Сводная ведомость Коммерческих потребителей.xlsx")
         sheet = book[month]
 
         self.insert_data(sheet, data)
         self.formating_consumers(sheet)
-        book.save(f"{path}\Сводная ведомость Коммерческих потребителей.xlsx")
+        book.save(f"{path}\\Сводная ведомость Коммерческих потребителей.xlsx")
 
         logging.info(f"Сформирована сводная ведомость коммерческих потребителей за {month}")
 
         
-    def collect_individual_svod(self, month: int) -> None:
+    def collect_individual_svod(self, month: str) -> None:
         """
         Функция для формирования сводной ведомости бытовых потребителей
 
         Args:
-            month (int): Номер месяца, за который нужно сформировать сводную ведомость
+            month (str): Название месяца
         """
-        path = f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость потребителей"
+        path = f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей"
 
-        data = self.repository.serialize_all_data(f"{path}\РВ Потребителей {month}\РВ Бытовых потребителей")
-        book = self.get_svod_if_exists(f"{path}\Сводная ведомость Бытовых потребителей.xlsx")
+        data = self.repository.serialize_all_data(f"{path}\\РВ Потребителей {month}\\РВ Бытовых потребителей")
+        book = self.get_svod_if_exists(f"{path}\\Сводная ведомость Бытовых потребителей.xlsx")
         sheet = book[month]
 
         self.insert_data(sheet, data)
         self.formating_consumers(sheet)
-        book.save(f"{path}\Сводная ведомость Бытовых потребителей.xlsx")
+        book.save(f"{path}\\Сводная ведомость Бытовых потребителей.xlsx")
 
         logging.info(f"Сформирована сводная ведомость бытовых потребителей за {month}")
         
     def collect_total_svod(self, month: int) -> None:
         data = self.repository.get_total_svod_data(month)
         
-        path = f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость потребителей\Сводная ведомость потребителей.xlsx"
+        path = f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость потребителей.xlsx"
         book = self.get_svod_if_exists(path)
         sheet = book[month]
         
@@ -107,28 +104,28 @@ class ConsumersService(BaseService):
     
     def create_individual_statement(self, month: int):
         data = self.repository.get_statment(month, "ch")
-        path = resource_path(f"{self.directory}\Шаблоны расчетных ведомостей\РВ Бытовых потребителей")
+        path = resource_path(f"{self.directory}\\Шаблоны расчетных ведомостей\\РВ Бытовых потребителей")
         clean_directory(path)
         
         for departament_id, name in DEPARTAMENT.items():
-            book = open_excel("template/Расчетная ведомость потребителей.xlsx")
+            book = load_workbook("src\\template\\rv_consumers.xlsx")
             sheet = book.worksheets[0]
             
             self.insert_data_by_departament(sheet, data, departament_id)
             self.formating_consumers(sheet)
-            book.save(f"{path}\РВ Бытовых Потребителей {name} {datetime.now().year} {month}.xlsx")
+            book.save(f"{path}\\РВ Бытовых Потребителей {name} {datetime.now().year} {month}.xlsx")
         logging.info(f"СФормированы Расчетные ведомости Бытовых потребителей за {month}")
             
     def create_commerce_statement(self, month: int):
         data = self.repository.get_statment(month, "cc")
-        path = resource_path(f"{self.directory}\Шаблоны расчетных ведомостей\РВ Коммерческих потребителей")
+        path = resource_path(f"{self.directory}\\Шаблоны расчетных ведомостей\\РВ Коммерческих потребителей")
         clean_directory(path)
         
         for departament_id, name in DEPARTAMENT.items():
-            book = open_excel("template/Расчетная ведомость потребителей.xlsx")
+            book = load_workbook("src\\template\\rv_consumers.xlsx")
             sheet = book.worksheets[0]
             
             self.insert_data_by_departament(sheet, data, departament_id)
             self.formating_consumers(sheet)
-            book.save(f"{path}\РВ Коммерческих потребителей {name} {datetime.now().year} {month}.xlsx")
+            book.save(f"{path}\\РВ Коммерческих потребителей {name} {datetime.now().year} {month}.xlsx")
         logging.info(f"СФормированы Расчетные ведомости Коммерческих потребителей за {month}")

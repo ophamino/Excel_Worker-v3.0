@@ -24,7 +24,7 @@ def open_excel(path: str) -> Workbook:
     except PermissionError:
         logging.info(f"Закройте файлы перед началом работы программы")
     except Exception as err:
-        logging.critical(err)
+        print(err)
 
 
 def create_months_sheet_if_not_exists(workbook: Workbook, month: str | int | None = None) -> None:

@@ -1,8 +1,10 @@
 from typing import Dict, Any
 
 from .base import ExcelRepository
-from src.utils.excel import open_excel
+from openpyxl import load_workbook
+
 from src.utils.base import get_main_dir
+from src.utils.const import MONTH_LIST
 
 
 class ComsumerRepository(ExcelRepository):
@@ -25,9 +27,9 @@ class ComsumerRepository(ExcelRepository):
         Returns:
             Dict[str, Dict[str, Any]]: _description_
         """
-        path = f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость потребителей"
-        individual = self.serialize_all_data(f"{path}\РВ Потребителей {month}\РВ Бытовых потребителей") 
-        commerce = self.serialize_all_data(f"{path}\РВ Потребителей {month}\РВ Коммерческих потребителей")
+        path = f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей"
+        individual = self.serialize_all_data(f"{path}\\РВ Потребителей {month}\\РВ Бытовых потребителей") 
+        commerce = self.serialize_all_data(f"{path}\\РВ Потребителей {month}\\РВ Коммерческих потребителей")
         data = individual | commerce
         
         return data
@@ -45,8 +47,8 @@ class ComsumerRepository(ExcelRepository):
         Returns:
             Dict[str, Dict[str, Any]]: Необходимые данные
         """
-        path = f"{self.directory}\Реестровая база данных\Реестр потребителей\Реестр потребителей.xlsx"
-        file = open_excel(path)
+        path = f"{self.directory}\\Реестровая база данных\\Реестр потребителей\\Реестр потребителей.xlsx"
+        file = load_workbook(path)
         sheet = file.worksheets[0]
         data = {}
         
@@ -76,8 +78,8 @@ class ComsumerRepository(ExcelRepository):
             Dict[str, Dict[str, Any]]: Необходимые данные
         """
         file = self.get_file_by_status(status)
-        path = f"{self.directory}\Сводный баланс энергопотребления\Сводный баланс 2023\Сводная ведомость потребителей\{file}"
-        file = open_excel(path)
+        path = f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\{file}"
+        file = load_workbook(path)
         sheet = file[month]
         data = {}
         
@@ -90,7 +92,18 @@ class ComsumerRepository(ExcelRepository):
         
         return data
 
-    def get_statment(self, month: str, status: str):
+    def get_statment(self, month: str, status: str) -> Dict[str, Dict[str, Any]]:
+        """
+        Функция для получения данных расчетных ведомостей
+
+        Args:
+            month (str): Название месяца
+            status (str): Статус расчетных ведомостей
+
+        Returns:
+            Dict[str, Dict[str, Any]]: Необходимые данные
+        """
+        month = MONTH_LIST[MONTH_LIST.index(month) - 1]
         registry = self.serialize_register(status)
         svod = self.serialize_svod(month, status)
         data = {}

@@ -33,7 +33,7 @@ class BalanceAnalitic:
         ax.legend(labels, loc=2)
         pyplot.pie([1], colors="w", radius=0.6)
         pyplot.title("Сальда переток")
-        pyplot.savefig(resource_path("./images/balance.png"))
+        pyplot.savefig(resource_path("src\\images\\analytics\\balance.png"))
            
     
     def write_waste_pie(self, data: dict[str, dict]):
@@ -49,7 +49,7 @@ class BalanceAnalitic:
         ax.pie(slices, labels=percent, wedgeprops={"edgecolor": "black", "linewidth": 1})
         pyplot.pie([1], colors="w", radius=0.6)
         pyplot.title("Потери")
-        pyplot.savefig(resource_path("./images/waste.png"))
+        pyplot.savefig(resource_path("src\\images\\analytics\\waste.png"))
     
     
     
@@ -66,22 +66,22 @@ class BalanceAnalitic:
         ax.pie(slices, labels=percent, wedgeprops={"edgecolor": "black", "linewidth": 1})
         pyplot.pie([1], colors="w", radius=0.6)
         pyplot.title("Полезный отпуск")
-        pyplot.savefig(resource_path("./images/consumption.png"))
+        pyplot.savefig(resource_path("src\\images\\analytics\\consumption.png"))
     
     def create_all_pie(self, sheet: Worksheet = 0, data: dict[str, dict] = 1):
         self.write_waste_pie(data)
         self.write_balance_pie(data)
         self.write_consumption_pie(data)
         
-        balance_pie = Image(resource_path("./images/balance.png"))
+        balance_pie = Image(resource_path("src\\images\\analytics\\balance.png"))
         balance_pie.anchor = 'A9'
         sheet.add_image(balance_pie)
         
-        consumption = Image(resource_path("./images/consumption.png"))
+        consumption = Image(resource_path("src\\images\\analytics\\consumption.png"))
         consumption.anchor = 'K9'
         sheet.add_image(consumption)
         
-        waste_pie = Image(resource_path("./images/waste.png"))
+        waste_pie = Image(resource_path("src\\images\\analytics\\waste.png"))
         waste_pie.anchor = 'U9'
         sheet.add_image(waste_pie)
         
@@ -96,7 +96,7 @@ class BalanceAnalitic:
         pyplot.title('Потери по структурным подразделениям')
         pyplot.ylabel('Структурные подразделения')
         pyplot.xlabel('Потери (в млн.)')
-        pyplot.savefig(resource_path("./images/hbar.png"))
+        pyplot.savefig(resource_path("src\\images\\analytics\\hbar.png"))
     
     def write_departamnents_bars(self, data):
         names = []
@@ -132,7 +132,7 @@ class BalanceAnalitic:
         ax.legend(loc='upper left', ncols=3)
         ax.set_ylim(0, 100)
         pyplot.rcParams["figure.figsize"] = 10, 20
-        pyplot.savefig(resource_path("./images/all_bars.png"))
+        pyplot.savefig(resource_path("src\\images\\analytics\\all_bars.png"))
         
     def create_analytics(self, month):
         data = Balance().serialize_balance(month)
@@ -172,12 +172,12 @@ class BalanceAnalitic:
         self.write_bars(data=data)
         self.write_departamnents_bars(data=data)
 
-        hbar = Image(resource_path("./images/hbar.png"))
+        hbar = Image(resource_path("src\\images\\analytics\\hbar.png"))
         hbar.anchor = 'AE9'
         sheet.add_image(hbar)
         
-        departament_bar = Image(resource_path("./images/all_bars.png"))
+        departament_bar = Image(resource_path("src\\images\\analytics\\all_bars.png"))
         departament_bar.anchor = "A33"
         sheet.add_image(departament_bar)
         
-        book.save(resource_path(f"{self.directory}/Аналитика баланса электроэнергии/Аналитика сводного баланса.xlsx"))
+        book.save(resource_path(f"{self.directory}\\Аналитика баланса электроэнергии\\Аналитика сводного баланса.xlsx"))
