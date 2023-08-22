@@ -3,7 +3,7 @@ import logging
 from typing import Optional
  
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QLabel, QVBoxLayout, QTabWidget
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QIcon
  
 from src.components.buttons import SideaBarButton
 from src.components import ConsumersContent, BicuContent, BalanceContent, ReportsContent, HelpContent, HistoryContent, SettingsContent
@@ -19,6 +19,9 @@ class Application(QMainWindow):
         self.height = int(0.618 * 1200)
         self.resize(self.width, self.height)
         self.initUI()
+        self.setWindowTitle(" ")
+        icon = QIcon(resource_path("src\\images\\interface\\qicon.png"))
+        self.setWindowIcon(icon)
     
     def initUI(self):
         self.logo = QLabel()

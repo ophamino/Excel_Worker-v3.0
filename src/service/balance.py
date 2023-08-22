@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 
 from src.utils.base import get_main_dir
 from src.utils.excel import open_sheet
@@ -100,6 +100,9 @@ class Balance:
     def create_balance(self, month: str | int) -> None:
         data = self.serialize_balance(month)
         path = resource_path(f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс {datetime.now().year}\\Сводный баланс 2023.xlsx")
+        if not os.path.exists(path):
+            file = Workbook()
+            file.save(path)
         file = load_workbook(path)
         sheet = open_sheet(file, month=month)
         
