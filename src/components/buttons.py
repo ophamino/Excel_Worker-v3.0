@@ -1,12 +1,23 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, Callable
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QInputDialog
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, QThread, pyqtSignal
 
 from src.service import Balance, BalanceAnalitic, BicuLog, BicuService, ConsumersService, Log
 from src.utils.const import MONTH_LIST
+
+
+class WorkerThread(QThread):
+    finished_signal = pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+
+    def run(self, func: Callable[[], int]):
+        func()
+        self.finished_signal.emit()
 
 
 class SideaBarButton(QPushButton):
@@ -33,6 +44,7 @@ class MonthButton(QPushButton):
         super(MonthButton, self).__init__("Сформировать", parent)
         self.setFixedSize(100, 50)
         self.clicked.connect(self.on_button_clicked)
+        self.myThread = WorkerThread()
         
     def on_button_clicked(self) -> None:
         month, ok = QInputDialog.getItem(self, "Выбор месяца", "Выберите месяц", MONTH_LIST)

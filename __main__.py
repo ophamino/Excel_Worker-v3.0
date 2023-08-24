@@ -13,7 +13,7 @@ from src.utils.base import resource_path
 class Application(QMainWindow):
     
     def __init__(self, parent: Optional[QWidget] = None) -> None:
-        super().__init__(parent)
+        super(Application, self).__init__(parent)
         self.setStyleSheet("QWidget { background-color: #fff; }")
         self.width = 1200
         self.height = int(0.618 * 1200)
@@ -47,14 +47,6 @@ class Application(QMainWindow):
         self.config_btn.clicked.connect(self.change_on_config)
         self.help_btn.clicked.connect(self.change_on_help)
         
-        self.consumers = ConsumersContent(self)
-        self.bicu = BicuContent(self)
-        self.balance = BalanceContent(self)
-        self.reports = ReportsContent(self)
-        self.history = HistoryContent(self)
-        self.settings = SettingsContent(self)
-        self.help = HelpContent(self)
-        
         left_layout = QVBoxLayout(self)
         left_layout.addWidget(self.logo)
         left_layout.addWidget(self.consumers_btn)
@@ -71,13 +63,13 @@ class Application(QMainWindow):
         
         self.right_widget = QTabWidget()
         self.right_widget.tabBar().setObjectName("mainTab")
-        self.right_widget.addTab(self.consumers, "")
-        self.right_widget.addTab(self.bicu, "")
-        self.right_widget.addTab(self.balance, "")
-        self.right_widget.addTab(self.reports, "")
-        self.right_widget.addTab(self.history, "")
-        self.right_widget.addTab(self.settings, "")
-        self.right_widget.addTab(self.help, "")
+        self.right_widget.addTab(ConsumersContent(self), "")
+        self.right_widget.addTab(BicuContent(self), "")
+        self.right_widget.addTab(BalanceContent(self), "")
+        self.right_widget.addTab(ReportsContent(self), "")
+        self.right_widget.addTab(HistoryContent(self), "")
+        self.right_widget.addTab(SettingsContent(self), "")
+        self.right_widget.addTab(HelpContent(self), "")
         self.right_widget.setCurrentIndex(0)
         self.right_widget.setStyleSheet('QTabBar::tab{ width: 0; height: 0; margin: 0; padding: 0; border: none; } QTabWidget { border: 10px solid #000000;}')
         
@@ -110,6 +102,7 @@ class Application(QMainWindow):
         
     def change_on_help(self):
         self.right_widget.setCurrentIndex(6)
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, filename=resource_path("src\log.log"), filemode="a", encoding="utf-8", format="[%(levelname)s] %(asctime)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")

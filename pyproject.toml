@@ -9,7 +9,6 @@ readme = "README.md"
 python = "^3.11"
 openpyxl = "^3.1.2"
 matplotlib = "^3.7.2"
-pandas = "^2.0.3"
 pyqt5 = "^5.15.9"
 
 
