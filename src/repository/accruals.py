@@ -1,13 +1,20 @@
 import os
+from datetime import datetime
 from typing import Dict, Union
 from abc import ABC, abstractmethod
 
 from openpyxl import load_workbook
 
 
+MONTH_LIST = [
+    "Январь", "Февраль", "Март",
+    "Апрель", "Май", "Июнь",
+    "Июль", "Август", 'Сентябрь',
+    'Октябрь', 'Ноябрь', 'Декабрь'
+]
+
+
 class AccrualsRepository(ABC):
-    def __init__(self, month: str) -> None:
-        self.month = month
 
     @abstractmethod
     def getEmptyID():
@@ -20,14 +27,14 @@ class AccrualsRepository(ABC):
 
 class AccrualsCommerceRepository(AccrualsRepository):
     """
-    Класс для 
+    Класс для начисления показаний для коммерческих потребителей
     """
     
 
-    def getExpensesBicu(self) -> Dict[str, Dict[str, int]]:
+    def getExpensesBicu(self, month: str) -> Dict[str, Dict[str, int]]:
         path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость БИКУ\\Сводная ведомость БИКУ.xlsx"
         file = load_workbook(path, data_only=True)
-        sheet = file[self.month]
+        sheet = file[month]
         data = {}
         
         for row in range(8, sheet.max_row + 1):
@@ -39,11 +46,11 @@ class AccrualsCommerceRepository(AccrualsRepository):
         return data
 
 
-    def getEmptyID(self) -> Dict[str, Dict[str, Union[str, int] ]]:
+    def getEmptyID(self, month) -> Dict[str, Dict[str, Union[str, int]]]:
 
         path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
         file = load_workbook(path, data_only=True)
-        sheet = file[self.month]
+        sheet = file[month]
         data = {}
         
         for row in range(6, sheet.max_row + 1):
@@ -54,10 +61,10 @@ class AccrualsCommerceRepository(AccrualsRepository):
                 }
         return data
     
-    def getExpensesSvod(self) ->  Dict[str, Dict[str, int]]:
-        path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
+    def getExpensesSvod(self, path: str, month: str) ->  Dict[str, Dict[str, int]]:
+        # path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
         file = load_workbook(path, data_only=True)
-        sheet = file[self.month]
+        sheet = file[month]
         data = {}
         
         for row in range(6, sheet.max_row + 1):
@@ -73,5 +80,48 @@ class AccrualsInividualRepository(AccrualsRepository):
     pass
 
 
-test = AccrualsCommerceRepository("Июнь").getExpensesSvod()
-print(test)
+class AccrualsService:
+    pass
+
+
+class AccrualsCommerceService(AccrualsService):
+    
+    repo = AccrualsCommerceRepository()
+    
+    def checkPreviousYear(self, empty_data: Dict[str, Dict[str, Union[str, int]]], month: str):
+        year = datetime.now().year - 1
+        path = f"..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
+        data = self.repo.getExpensesSvod(path, month)
+
+        if not os.path.exists(path):
+            return
+
+        for item in empty_data.keys():
+            if item in data.keys():
+                empty_data[item]["value"] += data[item]["value"]
+
+        return data
+    
+    
+    def check_nearest_month(self, empty_data: Dict[str, Dict[str, Union[str, int]]],  month: str):
+        month =  MONTH_LIST.index(month)
+        year = datetime.now().year
+        path = f"..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
+        file = load_workbook(path)
+
+        
+        for month in reversed(MONTH_LIST[ :month]):
+            if not empty_data:
+                break
+            sheet = file[month]
+            for row in range(6, sheet.max_row + 1):
+                key = sheet.cell(row, 3).value
+                expenses = sheet.cell(row, 23).value
+                if key and expenses:
+                    empty_data[]
+            
+            
+
+
+class AccrualsIndividualService(AccrualsService):
+    pass
