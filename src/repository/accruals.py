@@ -1,17 +1,10 @@
-import os
 from datetime import datetime
 from typing import Dict, Union
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 
-
-MONTH_LIST = [
-    "Январь", "Февраль", "Март",
-    "Апрель", "Май", "Июнь",
-    "Июль", "Август", 'Сентябрь',
-    'Октябрь', 'Ноябрь', 'Декабрь'
-]
+from src.utils.const import MAIN_DIR, MONTH_LIST
 
 
 class AccrualsRepository(ABC):
@@ -24,14 +17,6 @@ class AccrualsRepository(ABC):
     def getExpensesSvod():
         raise NotImplementedError
 
-    @abstractmethod
-    def getExpensesBicu():
-        raise NotImplementedError
-    
-    @abstractproperty
-    def getPath():
-        path = ...
-        return path
 
 class AccrualsCommerceRepository(AccrualsRepository):
     """
@@ -40,7 +25,7 @@ class AccrualsCommerceRepository(AccrualsRepository):
     
 
     def getExpensesBicu(self, month: str) -> Dict[str, Dict[str, int]]:
-        path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость БИКУ\\Сводная ведомость БИКУ.xlsx"
+        path = f"{MAIN_DIR}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость БИКУ\\Сводная ведомость БИКУ.xlsx"
         file = load_workbook(path, data_only=True)
         sheet = file[month]
         data = {}
@@ -56,7 +41,7 @@ class AccrualsCommerceRepository(AccrualsRepository):
 
     def getEmptyID(self, month) -> Dict[str, Dict[str, Union[str, int]]]:
 
-        path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
+        path = f"{MAIN_DIR}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
         file = load_workbook(path, data_only=True)
         sheet = file[month]
         data = {}
@@ -88,103 +73,36 @@ class AccrualsCommerceRepository(AccrualsRepository):
 
 class AccrualsInividualRepository(AccrualsRepository):
     
-    def getEmptyID(self, month):
-        path = "..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Бытовых потребителей.xlsx"
-        file = load_workbook(path, data_only=True)
-        sheet = file[month]
-        data = {}
-        
-        for row in range(6, sheet.max_row + 1):
-            if not sheet.cell(row, 23).value:
-                data[sheet.cell(row, 3).value] = {
-                    "value": [],
-                    "index": sheet.cell(row, 23).value if len(sheet.cell(row, 39).value) > 6 and  sheet.cell(row, 39).value[6:8] == "MC" else None,
-                    "method": None
-                }
-        return data
-    
-    def getExpensesSvod(self, month: str):
-        year = datetime.now().year
-        path = f"..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
-        file = load_workbook(path, data_only=True)
-        sheet = file[month]
-        data = {}
-        
-        for row in range(6, sheet.max_row + 1):
-            if sheet.cell(row, 21).value:
-                data[sheet.cell(row, 3).value] = {
-                    "value": int(sheet.cell(row, 22).value) - int(sheet.cell(row, 21).value if sheet.cell(row, 21).value else 0)
-                }
-        return data
-
-
-class AccrualsService:
-    pass
-
-
-class AccrualsCommerceService(AccrualsService):
-    
-    repo = AccrualsCommerceRepository()
-    
-    def __init__(self, month: str) -> None:
-        self.month = month
-        self.data = self.repo.getEmptyID(self.month)
-    
-    
-    def checkPreviousYear(self):
-        year = datetime.now().year - 1
-        path = f"..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
-        data = self.repo.getExpensesSvod(self.month)
-
-        if not os.path.exists(path):
-            return
-
-        for key in self.data.keys():
-            if key in data.keys() and not self.data[key]["value"]:
-                self.data[key]["value"] = data[key]["value"]
-                self.data["method"] = "Начисление за пред. период"
-
-    def checkControlBalance(self):
-        data = self.repo.getExpensesBicu(self.month)
-        for key in self.data.keys():
-            if key in data.keys() and not self.data[key]["value"]:
-                self.data[key]["value"] = data[key]["value"]
-                
-                self.data[key]["method"] = "Показания контрольного прибора учета"
-    
-    def checkNearestMonths(self):
-        index =  MONTH_LIST.index(self.month)
-        
-        for month in reversed(MONTH_LIST[ :index]):
-            data = self.repo.getExpensesSvod(month)
-            for key in self.data.keys():
-                if key in data.keys() and not self.data[key]["value"]:
-                    self.data[key]["value"] = data[key]["value"]
-                    self.data["method"] = "Начисление за пред. период"
-    
-    def makeAccruals(self):
-        self.checkPreviousYear()
-        self.checkNearestMonths()
-        self.checkControlBalance()
-    
-    
-    def insertAccruals(self):
-        year = datetime.now().year
-        path = path = f"..\\Dagenergy\\Сводный баланс энергопотребления\\Сводный баланс {year}\\Сводная ведомость потребителей\\Сводная ведомость Коммерческих потребителей.xlsx"
+    def getEmptyID(self, month: str) -> Dict[str, Dict[str, int]]:
+        path = f"{MAIN_DIR}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Бытовых потребителей.xlsx"
         file = load_workbook(path)
-        sheet = file[self.month]
+        sheet = file[month]
+        return {
+            sheet.cell(row, 3).value : {
+                "values": [],
+                "method": None,
+                "expenses": 0,
+            }
+            for row in range(6, sheet.max_row + 1)
+            if not sheet.cell(row, 22).value
+        }
         
-        self.makeAccruals()
         
-        for row in range(6, sheet.max_row + 1):
-            index = sheet.cell(row, 3).value
-            if index in self.data.keys():
-                 sheet.cell(row, 22).value = sheet.cell(row, 21) + self.data[index]["value"]
-                 sheet.cell(row, 31).value = self.data[index]["method"]
-        
-        file.save(path)
-            
-        
-
-class AccrualsIndividualService(AccrualsService):
-    pass
+    def getExpensesSvod(self, month: str, book: Workbook) -> Dict[str, Dict[str, int]]:
+        sheet = book[month]
+        return {
+            sheet.cell(row, 3).value: {
+                "expenses": sheet.cell(row, 22).value - sheet.cell(row, 21).value
+            }
+            for row in range(6, sheet.max_row + 1)
+        }
+    
+    def get_total_expenses(self, month: str):
+        path = f"{MAIN_DIR}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость потребителей\\Сводная ведомость Бытовых потребителей.xlsx"
+        book = load_workbook(path, data_only=True)
+        month_index = MONTH_LIST.index(month)
+        if month_index >= 5:
+            return {
+                month: self.getExpensesSvod(month, book)
+                for month in MONTH_LIST[month_index - 5: month_index]
+            }

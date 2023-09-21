@@ -60,19 +60,23 @@ class BicuService(BaseService):
         """
         path = (f"{self.directory}\\Сводный баланс энергопотребления\\Сводный баланс 2023\\Сводная ведомость БИКУ\\Сводная ведомость БИКУ.xlsx")
         try: 
-            data = self.repository.collect_svod(month)
-            
-            book = self.get_svod_if_exists(path)
-            sheet = book[month]
-            
-            self.insert_data(sheet, data)
-            self.formating_bicu(sheet)
-            book.save(path)
+            self._extracted_from_collect_data_in_svod_10(month, path)
         except Exception as e:
             print(e)
             print(path)
-        
+
         logging.info(f"Сформирована сводная ведомость БИКУ за {month}")
+
+    # TODO Rename this here and in `collect_data_in_svod`
+    def _extracted_from_collect_data_in_svod_10(self, month, path):
+        data = self.repository.collect_svod(month)
+
+        book = self.get_svod_if_exists(path)
+        sheet = book[month]
+
+        self.insert_data(sheet, data)
+        self.formating_bicu(sheet)
+        book.save(path)
     
     def create_new_statement(self, month: int) -> None:
         """

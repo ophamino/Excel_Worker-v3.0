@@ -3,6 +3,7 @@ from .balance import Balance
 from .bicu import BicuService
 from .consumers import ConsumersService
 from .log import Log, BicuLog
+from .accruals import AccrualsIndividualService, AccrualsCommerceService
 
 
 __all__ = [
@@ -11,5 +12,8 @@ __all__ = [
     BicuService,
     ConsumersService,
     Log,
-    BicuLog
+    BicuLog,
+    AccrualsIndividualService,
+    AccrualsCommerceService
+    
 ]

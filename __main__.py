@@ -8,6 +8,7 @@ from PyQt5.QtGui import QPixmap, QIcon
 from src.components.buttons import SideaBarButton
 from src.components import ConsumersContent, BicuContent, BalanceContent, ReportsContent, HelpContent, HistoryContent, SettingsContent
 from src.utils.base import resource_path
+from src.utils.tree_dir import TreeDir
  
  
 class Application(QMainWindow):
@@ -107,6 +108,7 @@ class Application(QMainWindow):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, filename=resource_path("src\log.log"), filemode="a", encoding="utf-8", format="[%(levelname)s] %(asctime)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
+    TreeDir().create_tree_dirs()
     app = QApplication(sys.argv)
     mainWindow = Application()
     mainWindow.show() 

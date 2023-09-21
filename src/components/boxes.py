@@ -11,6 +11,7 @@ from src.components.cards import (
     BicuLogCard, 
     BalanceCard,
     BalanceAnalyticsCard,
+    AccrualsCard
     )
 
 
@@ -42,6 +43,17 @@ class ConsumersStatementBox(ContentBox):
         
         layout = QVBoxLayout(self)
         layout.addWidget(ConsemersStatementCard(self))
+        
+        self.setLayout(layout)
+
+
+class AccrualsBox(ContentBox):
+     def __init__(self, parent: Optional[QWidget] = None) -> None:
+        super(AccrualsBox, self).__init__(parent)
+    
+        
+        layout = QVBoxLayout(self)
+        layout.addWidget(AccrualsCard(self))
         
         self.setLayout(layout)
 

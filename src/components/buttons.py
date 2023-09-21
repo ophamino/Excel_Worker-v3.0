@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QInputDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize, QThread, pyqtSignal
 
-from src.service import Balance, BalanceAnalitic, BicuLog, BicuService, ConsumersService, Log
+from src.service import Balance, BalanceAnalitic, BicuLog, BicuService, ConsumersService, Log, AccrualsCommerceService, AccrualsIndividualService
 from src.utils.const import MONTH_LIST
 
 
@@ -55,6 +55,26 @@ class MonthButton(QPushButton):
     def do_something_with_month(self, month) -> None:
         pass
 
+class AccrualsButton(MonthButton):
+    
+    def on_button_clicked(self) -> None:
+        category, category_status = QInputDialog.getItem(self, "Выбор ведомости", "Выберите тип ведомости", [
+            "Бытовые потребители",
+            "Коммерческие потребители",
+            ]
+        )
+        if category_status:
+            month, month_status = QInputDialog.getItem(self, "Выбор месяца", "Выберите месяц", MONTH_LIST)
+
+            if month_status:
+                self.do_something_with_month(category, month)
+    
+    def do_something_with_month(self, category, month) -> None:
+        if category == "Бытовые потребители":
+            AccrualsIndividualService().insert_values(month)
+        if category == "Коммерческие потребители":
+            AccrualsCommerceService(month).insertAccruals()
+
 
 class ConsumersSvodButton(MonthButton):
     
@@ -81,10 +101,6 @@ class ConsumersSvodButton(MonthButton):
 
 
 class ConsumersStatementButton(MonthButton):
-    
-    class ConsumerStatementCategory(Enum):
-        individual = "Расчетная ведомость бытовых потребителей"
-        commerce = "Расчетная ведомость коммерческих потребителей"
     
     def on_button_clicked(self) -> None:
         category, category_status = QInputDialog.getItem(self, "Выбор ведомости", "Выберите тип ведомости", [
@@ -136,3 +152,5 @@ class BalanceAnalyticsButton(MonthButton):
 
     def do_something_with_month(self, month: str) -> None:
         BalanceAnalitic().create_analytics(month)
+
+

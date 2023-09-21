@@ -10,7 +10,8 @@ from src.components.boxes import (
     BicuSvodBox,
     BicuStatementBox,
     BicuLogBox,
-    BalanceBox
+    BalanceBox,
+    AccrualsBox
     )
 
 
@@ -38,6 +39,7 @@ class ConsumersContent(Content):
         layout.addWidget(ComsumersSvodBox(self))
         layout.addWidget(ConsumersStatementBox(self))
         layout.addWidget(ConsumersLogBox(self))
+        layout.addWidget(AccrualsBox(self))
         layout.addStretch(1)
         
         self.setLayout(layout)
