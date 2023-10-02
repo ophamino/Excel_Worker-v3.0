@@ -169,7 +169,7 @@ class BypassButton(MonthButton):
     
     def do_something_with_month(self, category, month) -> None:
         if category == "Загрузить":
-            pass
+            BypassService().download_bypass(month)
 
         if category == "Выгрузить":
             BypassService().create_clear_bypass(month)
