@@ -11,7 +11,8 @@ from src.components.buttons import (
     BicuLogButton,
     BalanceButton,
     BalanceAnalyticsButton,
-    AccrualsButton
+    AccrualsButton,
+    BypassButton
     )
 
 
@@ -145,7 +146,7 @@ class AccrualsCard(ContentCard):
      def __init__(self, parent: Optional[QWidget] = None) -> None:
         super(AccrualsCard, self).__init__(parent)
         
-        label = CardTitle("Начисление показаний",self)
+        label = CardTitle("Начисление показаний", self)
         button = AccrualsButton(self)
         
         layout = QHBoxLayout()
@@ -153,3 +154,17 @@ class AccrualsCard(ContentCard):
         layout.addWidget(button)
         
         self.setLayout(layout)
+\
+        
+class BypassCard(ContentCard):
+        def __init__(self, parent: QWidget | None = None) -> None:
+            super(BypassCard, self).__init__(parent)
+            
+            label = CardTitle("Обходной лист", self)
+            button = BypassButton(self)
+            
+            layout = QHBoxLayout()
+            layout.addWidget(label)
+            layout.addWidget(button)
+            
+            self.setLayout(layout)

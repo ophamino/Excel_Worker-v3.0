@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QInputDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize, QThread, pyqtSignal
 
-from src.service import Balance, BalanceAnalitic, BicuLog, BicuService, ConsumersService, Log, AccrualsCommerceService, AccrualsIndividualService
+from src.service import Balance, BalanceAnalitic, BicuLog, BicuService, ConsumersService, Log, AccrualsCommerceService, AccrualsIndividualService, BypassService
 from src.utils.const import MONTH_LIST
 
 
@@ -154,3 +154,22 @@ class BalanceAnalyticsButton(MonthButton):
         BalanceAnalitic().create_analytics(month)
 
 
+class BypassButton(MonthButton):
+    
+    def on_button_clicked(self) -> None:
+        category, category_status = QInputDialog.getItem(self, "Выбор ведомости", "Выберите тип ведомости", [
+            "Загрузить",
+            "Выгрузить"
+            ]
+        )
+        month, month_status = QInputDialog.getItem(self, "Выбор месяца", "Выберите месяц", MONTH_LIST)
+        
+        if category_status and month_status:
+            self.do_something_with_month(category, month)
+    
+    def do_something_with_month(self, category, month) -> None:
+        if category == "Загрузить":
+            pass
+
+        if category == "Выгрузить":
+            BypassService().create_clear_bypass(month)

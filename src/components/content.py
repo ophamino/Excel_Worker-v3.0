@@ -11,7 +11,8 @@ from src.components.boxes import (
     BicuStatementBox,
     BicuLogBox,
     BalanceBox,
-    AccrualsBox
+    AccrualsBox,
+    BypassBox
     )
 
 
@@ -40,6 +41,7 @@ class ConsumersContent(Content):
         layout.addWidget(ConsumersStatementBox(self))
         layout.addWidget(ConsumersLogBox(self))
         layout.addWidget(AccrualsBox(self))
+        layout.addWidget(BypassBox(self))
         layout.addStretch(1)
         
         self.setLayout(layout)

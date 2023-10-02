@@ -9,6 +9,7 @@ from src.components.buttons import SideaBarButton
 from src.components import ConsumersContent, BicuContent, BalanceContent, ReportsContent, HelpContent, HistoryContent, SettingsContent
 from src.utils.base import resource_path
 from src.utils.tree_dir import TreeDir
+from src.service.bypass import BypassService
  
  
 class Application(QMainWindow):
